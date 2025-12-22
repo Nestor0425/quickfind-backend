@@ -1,28 +1,64 @@
-<h1 align="center">Welcome to readme-md-generator 👋</h1>
+<h1 align="center">Welcome to OmniPart Vision Backend 👁️‍🗨️</h1>
 <p align="center">
-  <img src="https://img.shields.io/npm/v/readme-md-generator.svg?orange=blue" />
-  <a href="https://www.npmjs.com/package/readme-md-generator">
-    <img alt="downloads" src="https://img.shields.io/npm/dm/readme-md-generator.svg?color=blue" target="_blank" />
-  </a>
-  <a href="https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" target="_blank" />
-  </a>
-  <a href="https://codecov.io/gh/kefranabg/readme-md-generator">
-    <img src="https://codecov.io/gh/kefranabg/readme-md-generator/branch/master/graph/badge.svg" />
-  </a>
-  <a href="https://github.com/frinyvonnick/gitmoji-changelog">
-    <img src="https://img.shields.io/badge/changelog-gitmoji-brightgreen.svg" alt="gitmoji-changelog">
-  </a>
-  <a href="https://twitter.com/FranckAbgrall">
-    <img alt="Twitter: FranckAbgrall" src="https://img.shields.io/twitter/follow/FranckAbgrall.svg?style=social" target="_blank" />
-  </a>
+  <a href="#-descripción-general">📌 Descripción</a> •
+  <a href="#-características-principales">✨ Features</a> •
+  <a href="#️-tecnologías-utilizadas">🛠️ Tecnologías</a> •
+  <a href="#-arquitectura-del-proyecto">🏗️ Arquitectura</a> •
+  <a href="#-instalación">🚀 Instalación</a> •
+  <a href="#-testing-y-seguridad">🧪 Seguridad</a> •
+  <a href="#-colaboradores">🤝 Colaboradores</a>
 </p>
 
-> CLI that generates beautiful README.md files.<br /> `readme-md-generator` will suggest you default answers by reading your `package.json` and `git` configuration.
+<p align="center">
+  <img src="https://img.shields.io/badge/node-%3E%3D16-green.svg" />
+  <img src="https://img.shields.io/badge/backend-API-blue.svg" />
+  <img src="https://img.shields.io/badge/database-PostgreSQL-blue.svg" />
+  <img src="https://img.shields.io/badge/security-enterprise-red.svg" />
+  <img src="https://img.shields.io/badge/license-MIT-yellow.svg" />
+</p>
 
-## ✨ Demo
+> **OmniPart Vision** es un sistema backend robusto diseñado como motor de búsqueda vectorial y gestión integral de usuarios. Este proyecto prioriza la seguridad, la escalabilidad y la auditoría de datos, implementando las mejores prácticas de DevSecOps y una arquitectura modular.
 
-`readme-md-generator` is able to read your environment (package.json, git config...) to suggest you default answers during the `README.md` creation process:
+## 🛠️ Tecnologías Utilizadas
+
+Este sistema ha sido construido con un stack tecnológico moderno, enfocado en rendimiento y seguridad:
+
+### 🚀 Core & Servidor
+
+- **Node.js** & **Express**: Entorno de ejecución y framework base.
+- **Dotenv**: Gestión de variables de entorno.
+- **Body-Parser**: Manejo de peticiones entrantes.
+- **Cookie-Parser**: Gestión segura de sesiones.
+- **Cors**: Configuración de seguridad cross-origin.
+
+### 🛡️ Seguridad & Protección
+
+- **Helmet**: Protección de cabeceras HTTP.
+- **Express-Rate-Limit**: Prevención de ataques de fuerza bruta y DDoS.
+- **Bcryptjs**: Encriptación de contraseñas.
+- **JWT (JSON Web Tokens)**: Autenticación segura y stateless.
+
+### 💾 Datos & ORM
+
+- **PostgreSQL**: Base de datos relacional principal.
+- **Sequelize**: ORM para modelado y consultas SQL.
+- **PG / PG-Hstore**: Controladores y serialización de datos.
+
+### 📈 Monitoreo & Logs
+
+- **Winston**: Sistema de logging universal.
+- **Winston-Daily-Rotate-File**: Rotación diaria de logs para optimizar almacenamiento.
+- **Nodemailer**: Servicio de notificaciones por correo electrónico.
+
+### 🧪 Calidad & DevSecOps
+
+- **ESLint** + **Plugin-Security**: Linter con reglas de seguridad estática.
+- **Snyk**: Escaneo de vulnerabilidades en dependencias.
+- **SonarQube Scanner**: Análisis continuo de calidad de código.
+- **ZAProxy (OWASP)**: Pruebas de penetración automatizadas.
+- **Nodemon**: Entorno de desarrollo con recarga automática.
+
+---
 
 <p align="center">
   <img width="700" align="center" src="https://user-images.githubusercontent.com/9840435/60266022-72a82400-98e7-11e9-9958-f9004c2f97e1.gif" alt="demo"/>
@@ -105,10 +141,10 @@ Contributions, issues and feature requests are welcome.<br /> Feel free to check
 
 ## Author
 
-👤 **Franck Abgrall**
+👤 **Alberto Torres Ponce**
 
-- Twitter: [@FranckAbgrall](https://twitter.com/FranckAbgrall)
-- Github: [@kefranabg](https://github.com/kefranabg)
+- Twitter: [@BetoPonce](https://twitter.com/)
+- Github: [@Ludociel-26](https://github.com/)
 
 ## Show your support
 
@@ -120,7 +156,7 @@ Please ⭐️ this repository if this project helped you!
 
 ## 📝 License
 
-Copyright © 2019 [Franck Abgrall](https://github.com/kefranabg).<br /> This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
+Copyright © 2025 [Beto Ponce](https://github.com/kefranabg).<br /> This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
 
 ---
 
