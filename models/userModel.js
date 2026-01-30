@@ -39,7 +39,7 @@ const User = sequelize.define('User', {
   },
   surname: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false, // Permite que esté vacío cambiar a true
   },
   country: {
     type: DataTypes.STRING,
