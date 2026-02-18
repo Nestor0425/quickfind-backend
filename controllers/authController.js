@@ -73,6 +73,7 @@ export const register = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
 // Inicio de sesión
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -110,7 +111,30 @@ export const login = async (req, res) => {
 
     return res.json({ success: true, role: user.rol_id });
   } catch (error) {
-    return res.json({ success: false, message: error.message });
+    // IDENTIFICADOR DE FALLA DE RED / BASE DE DATOS
+    const isDbError =
+      error.name === 'SequelizeConnectionError' ||
+      error.name === 'SequelizeConnectionRefusedError' ||
+      (error.parent && error.parent.code === 'ETIMEDOUT');
+
+    if (isDbError) {
+      // Log limpio para Sistemas en consola
+      console.error(
+        `❌ MICROSERVICE_AUTH_FAIL [ErrorCode: #DB-503]: Database connection timeout during login. User: ${email}. Reason: ${error.parent?.code || error.name}`,
+      );
+
+      // Retornamos HTTP 503 y el código exacto para que el Front-End no rompa y alerte
+      return res.status(503).json({
+        success: false,
+        message: 'Network Error #DB-503',
+      });
+    }
+
+    // Cualquier otro error
+    console.error(`❌ LOGIN_INTERNAL_ERROR: ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, message: 'Internal Server Error' });
   }
 };
 

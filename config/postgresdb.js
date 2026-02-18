@@ -13,9 +13,9 @@ const rejectUnauthorized = process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
 const caPath = path.resolve('certs/global-bundle.pem');
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME, // database
-  process.env.DB_USER, // username
-  process.env.DB_PASSWORD, // password
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
@@ -46,11 +46,17 @@ const connectDB = async () => {
     await import('../models/index.js');
     console.log('✅ Modelos importados correctamente.');
 
-    // await sequelize.sync({ alter: true });
-    console.log('✅ Modelos sincronizados con la base de datos');
+    // No hacemos sync aquí, lo hace server.js
   } catch (error) {
-    console.error('❌ Unable to connect to the database:', error);
-    process.exit(1);
+    const errorCode = error.original?.code || error.parent?.code || error.name;
+    const address =
+      error.original?.address || process.env.DB_HOST || 'unknown-host';
+    const port = error.original?.port || process.env.DB_PORT || 'unknown-port';
+
+    console.error(
+      `❌ DB_CONNECTION_FAILED [ErrorCode: #DB-503]: Unable to connect to PostgreSQL at ${address}:${port}. Reason: ${errorCode}`,
+    );
+    // ⚡ SIN process.exit(1). Node sigue vivo esperando peticiones.
   }
 };
 
