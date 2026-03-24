@@ -32,15 +32,13 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // =======================================================================
-// 🚩 2. TRUST PROXY (IMPORTANTE PARA AWS / NGINX / LOAD BALANCER)
+// 🚩 2. TRUST PROXY
 // =======================================================================
-// Permite que Express obtenga correctamente la IP real del cliente
-// cuando se usa un proxy o balanceador (muy común en AWS EC2)
 
 app.set('trust proxy', 1);
 
 // =======================================================================
-// 🚩 3. CONFIGURACIÓN DE SEGURIDAD CON HELMET
+// 🚩 3. SEGURIDAD
 // =======================================================================
 
 app.use(
@@ -50,7 +48,7 @@ app.use(
 );
 
 // =======================================================================
-// 🚩 4. MIDDLEWARES DE PARSEO
+// 🚩 4. PARSEO
 // =======================================================================
 
 app.use(express.json());
@@ -58,10 +56,9 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // =======================================================================
-// 🚩 5. CONFIGURACIÓN DE CORS (DESDE .env)
+// 🚩 5. CORS
 // =======================================================================
 
-// Convertimos la variable del .env en array
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map((url) => url.trim())
   : [];
@@ -69,15 +66,12 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Permitir requests sin origin (postman, curl, apps móviles)
       if (!origin) return callback(null, true);
 
-      // Si el origin está permitido
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
-      // Si no está permitido
       console.log(`❌ CORS bloqueado para: ${origin}`);
       return callback(new Error('Bloqueado por CORS'));
     },
@@ -89,7 +83,7 @@ app.use(
 );
 
 // =======================================================================
-// 🚩 6. RATE LIMITING (PROTECCIÓN CONTRA ATAQUES)
+// 🚩 6. RATE LIMIT
 // =======================================================================
 
 const getClientIP = (req) => {
@@ -101,8 +95,8 @@ const getClientIP = (req) => {
 };
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 300, // máximo 300 requests por IP
+  windowMs: 15 * 60 * 1000,
+  max: 300,
   standardHeaders: true,
   legacyHeaders: false,
 
@@ -122,13 +116,13 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // =======================================================================
-// 🚩 7. SERVIR ARCHIVOS ESTÁTICOS
+// 🚩 7. ARCHIVOS ESTÁTICOS
 // =======================================================================
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 // =======================================================================
-// 🚩 8. RUTAS DE LA API
+// 🚩 8. RUTAS
 // =======================================================================
 
 app.get('/', (req, res) => {
@@ -141,7 +135,7 @@ app.use('/api/roles', roleRouter);
 app.use('/api/levelArea', levelAreaRouter);
 
 // =======================================================================
-// 🚩 9. MANEJO DE ERRORES DE JSON
+// 🚩 9. ERROR JSON
 // =======================================================================
 
 app.use((err, req, res, next) => {
@@ -158,7 +152,7 @@ app.use((err, req, res, next) => {
 });
 
 // =======================================================================
-// 🚩 10. RUTA 404 (SI NO EXISTE LA RUTA)
+// 🚩 10. 404
 // =======================================================================
 
 app.use((req, res) => {
@@ -168,9 +162,8 @@ app.use((req, res) => {
 });
 
 // =======================================================================
-// 🚩 11. INICIAR SERVIDOR SOLO CUANDO LA DB ESTÉ LISTA
+// 🚩 11. START SERVER
 // =======================================================================
-// Esto evita que la API arranque si PostgreSQL falla
 
 const startServer = async () => {
   try {
@@ -180,9 +173,13 @@ const startServer = async () => {
 
     console.log('✅ Base de datos conectada');
 
-    await sequelize.sync();
-
-    console.log('✅ Modelos sincronizados');
+    // 🔥 SOLO EN DESARROLLO
+    if (process.env.NODE_ENV !== 'production') {
+      await sequelize.sync();
+      console.log('✅ Modelos sincronizados (dev)');
+    } else {
+      console.log('🚀 Producción: sync desactivado');
+    }
 
     app.listen(port, () => {
       logger.info(`🚀 Server started on PORT:${port}`);

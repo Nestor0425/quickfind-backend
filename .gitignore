@@ -4,3 +4,4 @@
 /.env.production
 /.env
 /.DS_Store
+logs
