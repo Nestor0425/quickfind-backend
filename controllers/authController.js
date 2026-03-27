@@ -61,7 +61,7 @@ export const register = async (req, res) => {
     // 🚩 AWS STYLE: Token de 12 Horas de vida máxima
     const token = jwt.sign(
       { id: user.id, role: user.rol_id },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET.trim(),
       { expiresIn: '12h' },
     );
 
@@ -141,7 +141,7 @@ export const login = async (req, res) => {
     // 🚩 AWS STYLE: Token de 12 Horas de vida máxima
     const token = jwt.sign(
       { id: user.id, role: user.rol_id },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET.trim(),
       { expiresIn: '12h' },
     );
 
