@@ -27,7 +27,12 @@ if (process.env.DATABASE_URL) {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false, // Supabase necesita esto
+        /* 
+           MEJORA: Ahora Sequelize usará la variable DB_SSL_REJECT_UNAUTHORIZED.
+           En Render la pusimos en 'false', lo que permitirá aceptar el certificado de Supabase 
+           y evitar el Error 500 interno durante el login.
+        */
+        rejectUnauthorized: rejectUnauthorized, 
       },
     },
   });
