@@ -32,7 +32,7 @@ const User = sequelize.define('User', {
   },
   surname: {
     type: DataTypes.STRING,
-    allowNull: true, 
+    allowNull: true,
   },
   country: {
     type: DataTypes.STRING,
@@ -49,8 +49,7 @@ const User = sequelize.define('User', {
   is_active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
-    comment:
-      'Interruptor general para "bannear" o desactivar usuarios sin borrarlos',
+    comment: 'Interruptor general para banear o desactivar usuarios sin borrarlos',
   },
   auth_token: {
     type: DataTypes.STRING,
@@ -73,13 +72,12 @@ const User = sequelize.define('User', {
     defaultValue: 0,
   },
 }, {
-  // --- ESTA ES LA CORRECCIÓN APLICADA ---
-  tableName: 'Users', 
-  timestamps: true,   
+  tableName: 'Users',
   freezeTableName: true,
-  underscored: false // <--- Agregado: Fuerza a Sequelize a usar CamelCase (createdAt/updatedAt)
+  timestamps: true,
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  underscored: false
 });
-
-// ⚠️ CERO RELACIONES AQUÍ. Mantén este archivo limpio.
 
 export default User;
