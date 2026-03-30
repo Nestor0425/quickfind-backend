@@ -68,7 +68,15 @@ app.use(
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
+      // Normalizamos el origen quitando la barra final si existe
+      const cleanOrigin = origin.replace(/\/$/, "");
+      
+      // Verificamos si el origen limpio coincide con alguno de los permitidos (también normalizados)
+      const isAllowed = allowedOrigins.some(
+        (authOrigin) => authOrigin.replace(/\/$/, "") === cleanOrigin
+      );
+
+      if (isAllowed) {
         return callback(null, true);
       }
 
