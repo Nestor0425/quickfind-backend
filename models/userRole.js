@@ -16,6 +16,11 @@ const Role = sequelize.define('Role', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+}, {
+  // --- CONFIGURACIÓN PARA SINCRONIZAR CON SUPABASE ---
+  tableName: 'roles',     // Forzamos minúsculas: en tu Supabase dice 'roles'
+  freezeTableName: true,  // Evita que Sequelize intente pluralizar a 'Roles'
+  timestamps: false       // En tu captura de 'roles' no existen createdAt/updatedAt
 });
 
 export default Role;

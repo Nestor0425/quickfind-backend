@@ -3,7 +3,7 @@ import { sequelize } from '../config/postgresdb.js';
 
 const User = sequelize.define('User', {
   id: {
-    type: DataTypes.BIGINT,
+    type: DataTypes.BIGINT, // int8 en Supabase
     autoIncrement: true,
     primaryKey: true,
   },
@@ -39,7 +39,8 @@ const User = sequelize.define('User', {
     allowNull: false,
   },
   birth_date: {
-    type: DataTypes.DATE,
+    // AJUSTE SENIOR: Usamos DATEONLY para que coincida con el tipo 'date' de tu captura
+    type: DataTypes.DATEONLY, 
     allowNull: false,
   },
   is_account_verified: {
@@ -51,6 +52,7 @@ const User = sequelize.define('User', {
     defaultValue: true,
     comment: 'Interruptor general para banear o desactivar usuarios sin borrarlos',
   },
+  // --- COLUMNAS QUE ACABAS DE CREAR EN SUPABASE ---
   auth_token: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -60,7 +62,7 @@ const User = sequelize.define('User', {
     defaultValue: '',
   },
   verify_otp_expire_at: {
-    type: DataTypes.BIGINT,
+    type: DataTypes.BIGINT, // int8 en Supabase
     defaultValue: 0,
   },
   reset_otp: {
@@ -68,11 +70,11 @@ const User = sequelize.define('User', {
     defaultValue: '',
   },
   reset_otp_expire_at: {
-    type: DataTypes.BIGINT,
+    type: DataTypes.BIGINT, // int8 en Supabase
     defaultValue: 0,
   },
 }, {
-  tableName: 'Users',
+  tableName: 'Users', // Coincide con la "U" mayúscula de tu tabla
   freezeTableName: true,
   timestamps: true,
   createdAt: 'createdAt',
