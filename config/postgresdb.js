@@ -18,26 +18,31 @@ const isProduction = process.env.NODE_ENV === 'production';
 let sequelize;
 
 if (process.env.DATABASE_URL) {
-  // ✅ MODO PRODUCCIÓN (Supabase / Render)
+  // ✅ MODO PRODUCCIÓN (Supabase / Render) - Optimizado para Plan Free
   console.log('🌐 Usando DATABASE_URL para conexión');
 
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     logging: false,
+    // 🔥 CONFIGURACIÓN PARA PLAN FREE: Evita que la conexión muera por latencia
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 60000, // 60 segundos de espera para conexiones lentas
+      idle: 10000
+    },
     dialectOptions: {
       ssl: {
         require: true,
-        /* 
-           MEJORA: Ahora Sequelize usará la variable DB_SSL_REJECT_UNAUTHORIZED.
-           En Render la pusimos en 'false', lo que permitirá aceptar el certificado de Supabase 
-           y evitar el Error 500 interno durante el login.
-        */
-        rejectUnauthorized: rejectUnauthorized, 
+        // Forzamos false para evitar errores de certificados en el handshake inicial
+        rejectUnauthorized: false, 
       },
+      // Mantiene la conexión activa con el pooler de Supabase
+      keepAlive: true,
     },
   });
 } else {
-  // ✅ MODO LOCAL (tu lógica original intacta)
+  // ✅ MODO LOCAL (Lógica original intacta)
   console.log('💻 Usando configuración local DB_HOST');
 
   sequelize = new Sequelize(
