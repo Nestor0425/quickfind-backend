@@ -25,6 +25,10 @@ const levelArea = sequelize.define('levelArea', {
       is: /^#([0-9A-F]{3}){1,2}$/i, // Valida que sea un hex válido
     },
   },
+}, {
+  // CONFIGURACIÓN DE CONEXIÓN CON SUPABASE
+  tableName: 'level_areas', // Fuerza el nombre exacto con guion bajo
+  timestamps: true,         // Mantiene createdAt y updatedAt
 });
 
 export default levelArea;
